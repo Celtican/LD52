@@ -11,11 +11,11 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Resource
+  - Beam
+  - Projectile
+  - Ship
+  - Asteroid
   - 
   - 
   - 
@@ -38,6 +38,24 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 3275896179
+    locked: 0
+  - name: Asteroids
+    uniqueID: 851102467
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Supplies
+    uniqueID: 3662249165
+    locked: 0
+  - name: Projectiles
+    uniqueID: 3692912961
+    locked: 0
+  - name: Ships
+    uniqueID: 127519519
+    locked: 0
+  - name: UI
+    uniqueID: 1734739121
     locked: 0
