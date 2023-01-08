@@ -4,9 +4,12 @@ using UnityEngine.Events;
 
 public class Hull : MonoBehaviour
 {
+    public static float loadOnDestroy = 0;
+    
     public UnityEvent onDie;
     public AudioController.Audio audioOnHit;
     public AudioController.Audio audioOnDie;
+    public GameObject hitParticlePrefab;
     
     public float maxHull = 5;
     private float curHull;
@@ -28,6 +31,7 @@ public class Hull : MonoBehaviour
     {
         if (IsDead()) return;
         AudioController.instance.PlaySound(audioOnHit);
+        Instantiate(hitParticlePrefab, transform.position, Quaternion.identity);
         SetHull(curHull - amount);
     }
 
@@ -46,6 +50,10 @@ public class Hull : MonoBehaviour
         {
             onDie.Invoke();
             AudioController.instance.PlaySound(audioOnDie);
+            if (!isPlayer)
+            {
+                Collector.instance.AddLoad(loadOnDestroy);
+            }
         }
     }
 

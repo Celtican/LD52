@@ -37,11 +37,7 @@ public class HudController : MonoBehaviour
         if (ShopController.instance != null)
         {
             int profit = (int)ShopController.instance.CalculateMoney();
-            loadText.text = profit <= 0 ? "Load" : "Load ($" + profit + ")";
-        }
-        else
-        {
-            print("What");
+            loadText.text = profit <= 0 ? "Load" : "Load ($" + $"{profit:n0}" + ")";
         }
     }
 

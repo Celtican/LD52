@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cinemachine;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -15,11 +16,18 @@ public class ShopController : MonoBehaviour
     public WarpGate warpGate;
     public TMP_Text tipText;
     public AudioController.Audio audioOnWarp;
+    public AudioController.Audio audioOnClick;
+    public Animator animator;
+
+    public new CinemachineVirtualCamera camera;
+    public SpriteRenderer playerShipSpriteRenderer;
+    public Sprite coolPlayerShip;
     
     public PowerUpButton[] buttons;
     public TMP_Text moneyText;
     private List<PowerUp> powerUps;
     private PowerUp oopsPowerUp;
+    private PowerUp ftlPowerUp;
     
     private PlayerController player;
     private Hull playerHull;
@@ -68,22 +76,33 @@ public class ShopController : MonoBehaviour
                 () => upgradePriceModifier *= 0.85f),
             new PowerUp("Load Reorganizer", 10000, true, "An archaic practice that removes useful parts of a ship for other useful parts.\nIncreases maximum load, decreases hull strength.",
                 () => { playerCollector.maxLoad *= 1.5f; playerHull.maxHull *= 0.8f; }),
+            new PowerUp("Mk. II Radar", 10000, true, "An extended radar capable of collecting significantly more intelligence.\nIncreases your viewing distance.",
+                () => camera.m_Lens.OrthographicSize += 2),
             
-            new PowerUp("FTL Overdrive", 60000, false, "Alien technology designed for intergalactic affairs.\nRemoves your maximum speed.",
-                () => player.velocityMax = 100),
             new PowerUp("VIP License", 30000, false, "Temporary proof that you are very very important.\nRemoves the 10% Federations tax.",
                 () => tax = 1),
             new PowerUp("Bullet Synthesizer", 30000, false, "Generates bullets with the flux of space.\nRemoves bullet energy cost.",
                 () => playerGun.energyTax = 0),
             new PowerUp("Ether Projector", 20000, false, "A large-scale Ether Crystal device that aids in harvesting more crystals.\nDoubles the size of the harvester beam.",
             () => playerBeam.transform.localScale *= 2),
+            new PowerUp("Premium Cosmetics", 40000, false, "Cloaking technology allows your ship to appear, frankly, awesome.\nMakes your ship look rad.",
+                () => playerShipSpriteRenderer.sprite = coolPlayerShip),
+            new PowerUp("Asteroid Disengagers", 15000, false, "An added layer to your shield neutralizes the threat of asteroid collisions.\nPrevent damage from asteroids.",
+                () => playerHull.damageTakenFromAsteroid = 0),
+            new PowerUp("Auto Scavengers", 20000, false, "AI-enhanced drones deploy into the wreckage of other ships to retrieve lost Ether Crystals.\nGain crystals when destroying pirates.",
+                () => Hull.loadOnDestroy = 5),
+            new PowerUp("Beam Amplifier", 15000, false, "By directing more power towards the harvester beam, its efficiency is greatly increased.\nIncreases the harvester beam's strength.",
+                () => playerBeam.absorbSpeed *= 2f),
         });
         oopsPowerUp = new PowerUp("On-Sale Ticket", 499, true, "The only thing you can afford is this lowly ticket to another sector.",
             () => {});
+        ftlPowerUp = new PowerUp("FTL OVERDRIVER", 100000, false, "The most prestigious contraption in history, the Holy Grail of the Space Age.\nREMOVES YOUR MAXIMUM SPEED.",
+            () => player.velocityMax = 100);
     }
 
     private void OnEnable()
     {
+        animator.SetBool("ShopOpen", true);
         player.enabled = false;
         
         SetMoney(Mathf.Max(CalculateMoney(), 499));
@@ -96,6 +115,10 @@ public class ShopController : MonoBehaviour
         if (!CanPurchaseAnyPowerUp())
         {
             SetButtonPowerUp(buttons[1], oopsPowerUp);
+        }
+        else if (money > 50000)
+        {
+            SetButtonPowerUp(buttons[0], ftlPowerUp);
         }
         
         RefreshButtons();
@@ -121,6 +144,7 @@ public class ShopController : MonoBehaviour
         AudioController.instance.PlaySound(audioOnWarp);
         
         player.accelerateAudioSource.Stop();
+        playerBeam.gameObject.SetActive(false);
     }
 
     private void RandomizeButton(PowerUpButton powerUpButton)
@@ -156,6 +180,7 @@ public class ShopController : MonoBehaviour
         powerUpButton.button.onClick.AddListener(() =>
         {
             if (cost > money) return;
+            AudioController.instance.PlaySound(audioOnClick);
             SetMoney(money - cost);
             if (!powerUp.isRepeatable) powerUps.Remove(powerUp);
             powerUp.onPurchase();
@@ -171,6 +196,12 @@ public class ShopController : MonoBehaviour
 
     public float CalculateMoney()
     {
+        // hell yeah this is inefficient. How much time do I have left? 5 hours. And I still need to do visual polish! Why am I writing this comment? GO, GO, GO!
+        if (playerCollector == null)
+        {
+            player = FindObjectOfType<PlayerController>();
+            playerCollector = player.GetComponent<Collector>();
+        }
         return playerCollector.GetExcess() * crystalPrice * tax;
     }
 
@@ -206,6 +237,7 @@ public class ShopController : MonoBehaviour
         playerCompass.pointTowards = warpGate.gameObject;
         MenuController.instance.canPause = true;
         AudioController.instance.PlaySound(audioOnWarp);
+        animator.SetBool("ShopOpen", false);
     }
 
     private void OnDestroy()

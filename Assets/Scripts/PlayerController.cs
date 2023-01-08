@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
 {
@@ -21,6 +23,7 @@ public class PlayerController : MonoBehaviour
     public float speedTaxPerSecond = 0.5f;
 
     public AudioSource accelerateAudioSource;
+    public CinemachineVirtualCamera cinemachineCamera;
     
     private Rigidbody2D body;
     private Collector collector;
@@ -96,9 +99,12 @@ public class PlayerController : MonoBehaviour
     public void ResetPhysics()
     {
         transform.position = new Vector3();
-        transform.rotation = Quaternion.Euler(0, 0, 0);
-        body.velocity = new Vector2();
+        float angle = Random.Range(0, 360f);
+        transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360f));
+        body.velocity = new Vector2(Mathf.Cos(angle), Mathf.Sign(angle));
         body.angularVelocity = 0;
+        camera.transform.position = new Vector3(0, 0, -10);
+        cinemachineCamera.transform.position = new Vector3(0, 0, -10);
     }
 
     public void Lose()

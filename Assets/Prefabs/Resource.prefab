@@ -53,7 +53,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.75
+  m_Radius: 0.3207469
 --- !u!114 &8812053738164734045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9279b26185243f1b3400f0cb13243b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mass: 0.5
+  mass: 0.4
 --- !u!50 &8812053738164734046
 Rigidbody2D:
   serializedVersion: 4
@@ -138,7 +138,7 @@ Transform:
   m_GameObject: {fileID: 8812053738480377085}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3206, y: 0.3206, z: 0.3206}
+  m_LocalScale: {x: 0.12362336, y: 0.12362336, z: 0.12362336}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8812053738164734044}
@@ -271,7 +271,7 @@ SpriteRenderer:
   m_SortingLayerID: -632718131
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 00d2563a6b3a4fb49a786a4fe927212e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 390dff260cc4d984798bd11be1a6131d, type: 3}
   m_Color: {r: 1, g: 0.5896226, b: 0.94564664, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -308,10 +308,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprites:
-  - {fileID: 21300000, guid: 00d2563a6b3a4fb49a786a4fe927212e, type: 3}
-  - {fileID: 21300000, guid: e91deb459c6609c4baa76e48f832941a, type: 3}
-  - {fileID: 21300000, guid: f6546c24c49bf594fa0b04e05cb47d84, type: 3}
-  - {fileID: 21300000, guid: 0645a5c751bb9e34a849412eaaafddcd, type: 3}
-  - {fileID: 21300000, guid: 66a4ccef5d341464d98776c1364e2f1e, type: 3}
+  - {fileID: 21300000, guid: 390dff260cc4d984798bd11be1a6131d, type: 3}
+  - {fileID: 21300000, guid: db1c432523fdc1a4b972a52cd86f464c, type: 3}
+  - {fileID: 21300000, guid: 4c67b5e2a7f25894fb6e446763efa22f, type: 3}
+  - {fileID: 21300000, guid: 1c656fe63b879f24791e2297fe5efe69, type: 3}
+  - {fileID: 21300000, guid: 4d8b053c88336a84bac16e28e288588a, type: 3}
+  - {fileID: 21300000, guid: f6c221a4aca886045a76a90392dc76ff, type: 3}
   randomizeX: 1
   randomizeY: 1

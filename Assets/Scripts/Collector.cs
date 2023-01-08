@@ -5,13 +5,21 @@ using UnityEngine.Serialization;
 
 public class Collector : MonoBehaviour
 {
+    public static Collector instance { get; private set; }
+    
     public UnityEvent onNoEnergy;
+    public GameObject collectParticlePrefab;
 
     public AudioController.Audio soundOnCollect;
     
     public float maxLoad = 100f;
     public float keepLoad = 20f;
     private float curLoad;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
@@ -28,6 +36,7 @@ public class Collector : MonoBehaviour
             Destroy(resource.gameObject);
             
             AudioController.instance.PlaySound(soundOnCollect);
+            Instantiate(collectParticlePrefab, transform.position, Quaternion.identity);
         }
     }
 
@@ -59,5 +68,10 @@ public class Collector : MonoBehaviour
     public float GetExcess()
     {
         return Mathf.Max(curLoad - keepLoad, 0);
+    }
+
+    private void OnDestroy()
+    {
+        instance = null;
     }
 }
