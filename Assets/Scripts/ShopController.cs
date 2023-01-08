@@ -41,6 +41,7 @@ public class ShopController : MonoBehaviour
     private float upgradePriceModifier = 1f;
     private float money;
     private PirateSpawner pirateSpawner;
+    private bool purchasedFTL = false;
 
     public ShopController()
     {
@@ -97,7 +98,11 @@ public class ShopController : MonoBehaviour
         oopsPowerUp = new PowerUp("On-Sale Ticket", 499, true, "The only thing you can afford is this lowly ticket to another sector.",
             () => {});
         ftlPowerUp = new PowerUp("FTL OVERDRIVER", 100000, false, "The most prestigious contraption in history, the Holy Grail of the Space Age.\nREMOVES YOUR MAXIMUM SPEED.",
-            () => player.velocityMax = 100);
+            () =>
+            {
+                player.velocityMax = 100;
+                purchasedFTL = true;
+            });
     }
 
     private void OnEnable()
@@ -116,7 +121,7 @@ public class ShopController : MonoBehaviour
         {
             SetButtonPowerUp(buttons[1], oopsPowerUp);
         }
-        else if (money > 50000)
+        else if (money > 50000 && !purchasedFTL)
         {
             SetButtonPowerUp(buttons[0], ftlPowerUp);
         }
