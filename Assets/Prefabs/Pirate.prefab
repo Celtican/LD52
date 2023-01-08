@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 6867413039558852094}
   - component: {fileID: 6867413039558852095}
   - component: {fileID: 6867413039558852090}
+  - component: {fileID: 6811363149250162896}
   m_Layer: 0
   m_Name: Pirate
   m_TagString: Untagged
@@ -186,8 +187,23 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  maxHull: 2
-  damageTakenFromAsteroid: 2
+  audioOnHit:
+    clip: {fileID: 8300000, guid: 44e4a5203ddec534cac1e1178dcb781a, type: 3}
+    volume: 0.8
+    randomVolume: 0.1
+    pitch: 1
+    randomPitch: 0.1
+  audioOnDie:
+    clip: {fileID: 8300000, guid: e4754d2e64be47847b0843ba491cce87, type: 3}
+    volume: 0.8
+    randomVolume: 0.1
+    pitch: 1
+    randomPitch: 0.1
+  maxHull: 3
+  damageTakenFromAsteroid: 3
+  asteroidLayer:
+    serializedVersion: 2
+    m_Bits: 1024
   isPlayer: 0
 --- !u!114 &6867413039558852095
 MonoBehaviour:
@@ -216,9 +232,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7497602834d140788e97dd257cfd452a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
+  speed: 3
   rotationLerp: 2
-  shootRange: 7
+  shootRange: 4
+--- !u!114 &6811363149250162896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6867413039558852092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1aa0fee47244925b5dc30887d81e143, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6867413039667333796
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,7 +273,7 @@ Transform:
   m_GameObject: {fileID: 6867413039667333796}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2899, y: 0.2899, z: 0.2899}
+  m_LocalScale: {x: 0.26780963, y: 0.26780963, z: 0.26780963}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6867413039558852091}

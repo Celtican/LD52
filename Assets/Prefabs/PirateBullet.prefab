@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 803732004653015445}
   - component: {fileID: 6549429566290445088}
   - component: {fileID: 8092761127012399477}
+  - component: {fileID: -806860054994147733}
+  - component: {fileID: -6548548873133419671}
   m_Layer: 0
   m_Name: PirateBullet
   m_TagString: Untagged
@@ -154,3 +156,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeUntilDestroy: 3
+--- !u!114 &-806860054994147733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803732004653015444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1aa0fee47244925b5dc30887d81e143, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-6548548873133419671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803732004653015444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21d93ac1484d40a9bb19660b27ae2edf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundToPlay:
+    clip: {fileID: 8300000, guid: 99fc74f920fe72d449f67d8a954a8847, type: 3}
+    volume: 0.8
+    randomVolume: 0.1
+    pitch: 1
+    randomPitch: 0.1

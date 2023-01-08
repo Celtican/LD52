@@ -5,22 +5,29 @@ using UnityEngine.Events;
 public class Hull : MonoBehaviour
 {
     public UnityEvent onDie;
+    public AudioController.Audio audioOnHit;
+    public AudioController.Audio audioOnDie;
     
     public float maxHull = 5;
     private float curHull;
 
     public float damageTakenFromAsteroid = 3;
+    public LayerMask asteroidLayer;
 
     public bool isPlayer = false;
+    private PlayerController playerController;
 
     private void Start()
     {
         curHull = maxHull;
         SetHull(maxHull);
+        playerController = GetComponent<PlayerController>();
     }
 
     public void Damage(float amount)
     {
+        if (IsDead()) return;
+        AudioController.instance.PlaySound(audioOnHit);
         SetHull(curHull - amount);
     }
 
@@ -35,7 +42,11 @@ public class Hull : MonoBehaviour
 
         curHull = Mathf.Clamp(newAmount, 0, maxHull);
         if (isPlayer) HudController.Instance.SetHullPercent(curHull/maxHull);
-        if (IsDead()) onDie.Invoke();
+        if (IsDead())
+        {
+            onDie.Invoke();
+            AudioController.instance.PlaySound(audioOnDie);
+        }
     }
 
     public bool IsDead()
@@ -45,9 +56,13 @@ public class Hull : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.GetComponent<Asteroid>())
+        if (asteroidLayer == (asteroidLayer | (1 << col.gameObject.layer)))
         {
             Damage(damageTakenFromAsteroid);
+            if (isPlayer)
+            {
+                playerController.Flip();
+            }
         }
     }
 

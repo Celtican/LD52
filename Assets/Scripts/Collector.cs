@@ -6,9 +6,11 @@ using UnityEngine.Serialization;
 public class Collector : MonoBehaviour
 {
     public UnityEvent onNoEnergy;
+
+    public AudioController.Audio soundOnCollect;
     
-    public float maxLoad = 20f;
-    public float keepLoad = 5f;
+    public float maxLoad = 100f;
+    public float keepLoad = 20f;
     private float curLoad;
 
     private void Start()
@@ -24,6 +26,8 @@ public class Collector : MonoBehaviour
         {
             AddLoad(resource.mass);
             Destroy(resource.gameObject);
+            
+            AudioController.instance.PlaySound(soundOnCollect);
         }
     }
 
@@ -45,5 +49,15 @@ public class Collector : MonoBehaviour
     public bool NoEnergy()
     {
         return curLoad <= 0;
+    }
+
+    public void Reset()
+    {
+        curLoad = keepLoad;
+    }
+
+    public float GetExcess()
+    {
+        return Mathf.Max(curLoad - keepLoad, 0);
     }
 }

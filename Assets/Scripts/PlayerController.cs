@@ -16,9 +16,11 @@ public class PlayerController : MonoBehaviour
     public float torqueMax = 180;
     public float torqueVelocityRatio = 1f; // how much velocity the ship loses while rotating
 
-    public float beamTaxPerSecond = 0.25f;
-    public float rotateTaxPerSecond = 0.1f;
-    public float speedTaxPerSecond = 0.1f;
+    public float beamTaxPerSecond = 0.5f;
+    public float rotateTaxPerSecond = 0.2f;
+    public float speedTaxPerSecond = 0.5f;
+
+    public AudioSource accelerateAudioSource;
     
     private Rigidbody2D body;
     private Collector collector;
@@ -42,6 +44,7 @@ public class PlayerController : MonoBehaviour
 
     public void Update()
     {
+        if (Time.timeScale == 0) return;
         bool isShooting = Input.GetButton("Shoot");
         if (isShooting)
         {
@@ -61,6 +64,21 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (Time.timeScale == 0)
+        {
+            accelerateAudioSource.Stop();
+            return;
+        }
+
+        if (Input.GetAxis("Vertical") > 0)
+        {
+            if (!accelerateAudioSource.isPlaying) accelerateAudioSource.Play();
+        }
+        else
+        {
+            accelerateAudioSource.Stop();
+        }
+        
         collector.AddLoad(-Mathf.Abs(Input.GetAxis("Horizontal")) * rotateTaxPerSecond * Time.deltaTime);
         collector.AddLoad(-Mathf.Max(Input.GetAxis("Vertical"), 0) * speedTaxPerSecond * Time.deltaTime);
         
@@ -69,10 +87,18 @@ public class PlayerController : MonoBehaviour
         float angle = body.rotation * Mathf.Deg2Rad;
         float magnitude = body.velocity.magnitude;
         magnitude = Mathf.Clamp(
-            magnitude + Mathf.Max(Input.GetAxis("Vertical"), -0.5f) * velocityAcceleration
+            magnitude + Mathf.Max(Input.GetAxis("Vertical"), -0.75f) * velocityAcceleration
             - Mathf.Abs(body.angularVelocity)/torqueMax*torqueVelocityRatio, 0, velocityMax);
         
         body.velocity = new Vector2(Mathf.Cos(angle)*magnitude, Mathf.Sin(angle)*magnitude);
+    }
+
+    public void ResetPhysics()
+    {
+        transform.position = new Vector3();
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+        body.velocity = new Vector2();
+        body.angularVelocity = 0;
     }
 
     public void Lose()
@@ -86,5 +112,14 @@ public class PlayerController : MonoBehaviour
     private void OnDestroy()
     {
         instance = null;
+    }
+
+    public void Flip()
+    {
+        transform.Rotate(0, 0, 180);
+        float angle = body.rotation * Mathf.Deg2Rad;
+        float magnitude = 1;
+        
+        body.velocity = new Vector2(Mathf.Cos(angle)*magnitude, Mathf.Sin(angle)*magnitude);
     }
 }

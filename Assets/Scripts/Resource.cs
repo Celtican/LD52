@@ -20,6 +20,7 @@ public class Resource : MonoBehaviour
             untethered = true;
             transform.SetParent(null, true);
             body.simulated = true;
+            body.bodyType = RigidbodyType2D.Dynamic;
         }
         Vector2 distance = target.transform.position - transform.position;
         body.velocity = distance.normalized * speed;

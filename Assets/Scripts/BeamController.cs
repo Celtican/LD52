@@ -4,6 +4,7 @@ using UnityEngine;
 public class BeamController : MonoBehaviour
 {
     public float absorbSpeed = 5f;
+    public AudioSource beamAudioSource;
     private new Camera camera;
 
     private void Awake()
@@ -14,6 +15,7 @@ public class BeamController : MonoBehaviour
     private void OnEnable()
     {
         RotateTowardsMouse();
+        beamAudioSource.Play();
     }
 
     private void Update()
@@ -34,5 +36,10 @@ public class BeamController : MonoBehaviour
         {
             resource.MoveTowards(transform.parent.gameObject, absorbSpeed);
         }
+    }
+
+    private void OnDisable()
+    {
+        beamAudioSource.Stop();
     }
 }

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 803732004653015445}
   - component: {fileID: 6549429566290445088}
   - component: {fileID: 8092761127012399477}
+  - component: {fileID: 4447611438705470074}
   m_Layer: 0
   m_Name: PlayerBullet
   m_TagString: Untagged
@@ -101,8 +102,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.27818692, y: -0.0040911436}
-  m_Size: {x: 0.9065305, y: 0.2666053}
+  m_Offset: {x: -0.03516007, y: -0.0040911697}
+  m_Size: {x: 0.89157796, y: 0.2666067}
   m_Direction: 1
 --- !u!50 &803732004653015445
 Rigidbody2D:
@@ -154,3 +155,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeUntilDestroy: 1
+--- !u!114 &4447611438705470074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803732004653015444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21d93ac1484d40a9bb19660b27ae2edf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundToPlay:
+    clip: {fileID: 8300000, guid: b05c18801c5a8294c97aa2c59680145e, type: 3}
+    volume: 0.8
+    randomVolume: 0.1
+    pitch: 1
+    randomPitch: 0.1
